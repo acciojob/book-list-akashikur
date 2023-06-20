@@ -1,16 +1,78 @@
 <!DOCTYPE html>
 
 <html>
-
 <head>
-	<link rel="stylesheet" href="styles.css">
+  <title>MyBookList</title>
+  <style>
+    .delete {
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+  <h1>MyBookList</h1>
 
+  <div class="form-group">
+    <input type="text" id="title" placeholder="Title">
+    <input type="text" id="author" placeholder="Author">
+    <input type="text" id="isbn" placeholder="ISBN">
+    <button id="submit">Submit</button>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>ISBN#</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="book-list"></tbody>
+  </table>
+
+  <script>
+    // Get references to the input fields and submit button
+    const titleInput = document.getElementById('title');
+    const authorInput = document.getElementById('author');
+    const isbnInput = document.getElementById('isbn');
+    const submitButton = document.getElementById('submit');
+    const bookList = document.getElementById('book-list');
+
+    // Function to add a new book to the table
+    function addBook() {
+      // Get the input values
+      const title = titleInput.value;
+      const author = authorInput.value;
+      const isbn = isbnInput.value;
+
+      // Create a new row in the table
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+        <td>${title}</td>
+        <td>${author}</td>
+        <td>${isbn}</td>
+        <td class="delete">Clear</td>
+      `;
+
+      // Add the new row to the table body
+      bookList.appendChild(newRow);
+
+      // Clear the input fields
+      titleInput.value = '';
+      authorInput.value = '';
+      isbnInput.value = '';
+    }
+
+    // Event listener for the submit button
+    submitButton.addEventListener('click', addBook);
+
+    // Event delegation for the delete button
+    bookList.addEventListener('click', function(event) {
+      if (event.target.classList.contains('delete')) {
+        event.target.parentElement.remove();
+      }
+    });
+  </script>
 </body>
-
 </html>
